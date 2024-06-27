@@ -1,8 +1,8 @@
 const connection = require("../infraestructure/database/connection")
-const repositorie = require('../repositories/Books')
+const repositorie = require('../repositories/Categories')
 const Tables = require('../infraestructure/database/tables')
 
-class Books{
+class Categories{
     async post(values){
         return await repositorie.post(values)
     }
@@ -29,4 +29,4 @@ class Books{
     }
 }
 
-module.exports = new Books
+module.exports = new Categories

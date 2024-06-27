@@ -1,7 +1,6 @@
 const Books = require('../models/books')
 
 module.exports = app => {
-    // title (string), description (string), author (string), category (string), publishedDate (date)
     app.post('/api/books/', async (req, res) => {
         try{
             const values = req.body

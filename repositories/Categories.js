@@ -1,35 +1,35 @@
 const query = require('../infraestructure/database/queries')
 
-class Books{
+class Catergories{
     async post(values){
-        const sql = 'INSERT INTO Books SET ?;'
+        const sql = 'INSERT INTO Categories SET ?;'
         return await query(sql, values)
     }
 
     async getAll(){
-        const sql = 'SELECT * FROM Books ORDER BY id DESC;'
+        const sql = 'SELECT * FROM Categories ORDER BY id DESC;'
         return await query(sql)
     }
 
     async getById(id){
-        const sql = 'SELECT * FROM Books WHERE id=?;'
+        const sql = 'SELECT * FROM Categories WHERE id=?;'
         return await query(sql, id)
     }
 
     async getByModel(model){
-        const sql = 'SELECT * FROM Books WHERE model=?'
+        const sql = 'SELECT * FROM Categories WHERE model=?'
         return await query(sql, model)
     }
 
     async updateById(id, values){
-        const sql = `UPDATE Books SET ? WHERE id=${id};`
+        const sql = `UPDATE Categories SET ? WHERE id=${id};`
         return await query(sql, values)
     }
 
     async deleteById(id){
-        const sql = 'DELETE FROM Books WHERE id=?;'
+        const sql = 'DELETE FROM Categories WHERE id=?;'
         return await query(sql, id)
     }
 }
 
-module.exports = new Books
+module.exports = new Catergories
