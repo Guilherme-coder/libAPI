@@ -1,9 +1,8 @@
-const Categories = require('../models/categories')
+const Categories = require('../models/Categories')
 
 module.exports = app => {
     app.post('/api/categories/', async (req, res) => {
         try{
-            console.log(req.body);
             const values = req.body
             if(!values.name)
                 throw new Error('O nome da categoria não pode ser vazia.')
@@ -52,6 +51,11 @@ module.exports = app => {
         try{
             const values = req.body
             const id = req.params.id
+            await Categories.getById(id)
+                .then(results => {
+                    if(results.length === 0)
+                        throw new Error('Categoria não cadastrada.')
+                })
             await Categories.updateById(id, values)
                 .then(results => {
                     res.status(201).json(values)
@@ -69,7 +73,7 @@ module.exports = app => {
                 throw new Error('A categoria não existe, logo não é possível deletá-la.')
             await Categories.deleteById(id)
                 .then(results => {
-                    res.status(200).json(results)
+                    res.status(200).json({message: "Categoria deletada com sucesso."})
                 })
         }catch(err){
             res.status(400).json({ message: err.message })

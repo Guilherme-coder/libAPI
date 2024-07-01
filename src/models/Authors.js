@@ -1,5 +1,5 @@
 const connection = require('../infraestructure/database/connection')
-const repositories = require('../repositories/authors')
+const repositories = require('../repositories/Authors')
 const moment = require('moment')
 
 class Authors{
@@ -16,16 +16,12 @@ class Authors{
         return await repositories.getById(id)
     }
 
-    async checkCredentials(email, password){
-        return await repositories.checkCredentials(email, password)
-    }
-
-    async checkEmail(email){
-        return await repositories.checkEmail(email)
-    }
-
     async updateById(id, values){
         return await repositories.updateById(id, values)
+    }
+
+    async deleteById(id){
+        return await repositories.deleteById(id)
     }
 }
 

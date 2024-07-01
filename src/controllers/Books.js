@@ -1,4 +1,4 @@
-const Books = require('../models/books')
+const Books = require('../models/Books')
 
 module.exports = app => {
     app.post('/api/books/', async (req, res) => {
@@ -14,7 +14,7 @@ module.exports = app => {
                 throw new Error('A categoria do livro não pode ser vazia.')
             Books.post(values)
                 .then(results => {
-                    res.status(201).json(values)
+                    res.status(201).json({message: "Livro criado com sucesso."})
                 })
         }catch(err){
             res.status(400).json({ message: err.message })
@@ -55,6 +55,11 @@ module.exports = app => {
         try{
             const values = req.body
             const id = req.params.id
+            await Books.getById(id)
+                .then(results => {
+                    if(results.length === 0)
+                        throw new Error('Livro não cadastrado.')
+                })
             await Books.updateById(id, values)
                 .then(results => {
                     res.status(201).json(values)
@@ -72,7 +77,7 @@ module.exports = app => {
                 throw new Error('O livro não existe, logo não é possível deletá-lo.')
             await Books.deleteById(id)
                 .then(results => {
-                    res.status(200).json(results)
+                    res.status(200).json({message: "Livro deletado com sucesso."})
                 })
         }catch(err){
             res.status(400).json({ message: err.message })
