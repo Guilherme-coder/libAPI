@@ -1,4 +1,6 @@
 const Books = require('../models/Books')
+const Authors = require('../models/Authors')
+const Categories = require('../models/Categories')
 
 module.exports = app => {
     app.post('/api/books/', async (req, res) => {
@@ -12,6 +14,21 @@ module.exports = app => {
                 throw new Error('O autor do livro não pode ser vazio.')
             if(!values.category)
                 throw new Error('A categoria do livro não pode ser vazia.')
+            if(!values.publishedDate)
+                throw new Error('A data de publicação do livro não pode ser vazia.')
+
+            await Authors.getById(values.author)
+            .then(results => {
+                if(results.length === 0)
+                    throw new Error('Autor não cadastrado.')
+            })
+            
+            await Categories.getById(values.category)
+                .then(results => {
+                    if(results.length === 0)
+                        throw new Error('Categoria não cadastrada.')
+                })
+
             Books.post(values)
                 .then(results => {
                     res.status(201).json({message: "Livro criado com sucesso."})
